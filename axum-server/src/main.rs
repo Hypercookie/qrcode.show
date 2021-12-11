@@ -64,8 +64,8 @@ struct QRGenerator(Generator);
 
 #[async_trait]
 impl<B> FromRequest<B> for QRGenerator
-where
-    B: Send, // required by `async_trait`
+    where
+        B: Send, // required by `async_trait`
 {
     type Rejection = StatusCode;
 
@@ -79,14 +79,14 @@ where
         }
 
         if let Some(val) =
-            get_first_header_value(req, HeaderName::from_static("x-qr-width"))
+        get_first_header_value(req, HeaderName::from_static("x-qr-width"))
         {
             gen.width =
                 val.parse().map(Some).map_err(|_| StatusCode::BAD_REQUEST)?;
         }
 
         if let Some(val) =
-            get_first_header_value(req, HeaderName::from_static("x-qr-height"))
+        get_first_header_value(req, HeaderName::from_static("x-qr-height"))
         {
             gen.height =
                 val.parse().map(Some).map_err(|_| StatusCode::BAD_REQUEST)?;
@@ -357,7 +357,9 @@ async fn get_handler(
         let input = uri
             .query()
             .map(|q| format!("{}?{}", path, q))
-            .unwrap_or_else(|| path.to_string());
+            .unwrap_or_else(|| path.to_string())
+            .replace("%20", " ");
+        std::println!("{}", input);
 
         let bytes = input.as_bytes();
         generate(bytes, &gen)
