@@ -3,6 +3,9 @@
 <h2 align = "center">Generate QR code easily for free - QR Code Generation as a Service.</h2>
 
 
+This is a custom fork which is runnable in docker and ONLY displays the QR Code when the website is called. Nothing else. Also it will convert spaces in the URL to spaces in the text. I use this with Homeassistant to display QR Codes on request.
+
+
 <br>
 
 ### INPUT:
